@@ -1,0 +1,98 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - 'health'
+          - 'prometheus'
+  endpoint:
+    prometheus:
+      access: READ_ONLY
+
+  server:
+    port: ${server.port}
+
+server:
+  port: 7005
+
+springdoc:
+  default-produces-media-type: 'application/json'
+  api-docs:
+    path: '/coe/api-docs'
+  swagger-ui:
+    url: '/coe/api-docs'
+    path: '/coe/swagger-ui.html'
+
+spring:
+  application:
+    name: coe-prototype
+
+  main:
+    allow-bean-definition-overriding: true
+
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:54320/coedb
+    username: root
+    password:
+    hikari:
+      poolName: hikari-pool-coedb
+      connectionTimeout: 30000
+      idleTimeout: 10000
+      maxLifetime: 1800000
+      leak-detection-threshold: 20000
+      maximumPoolSize: 50
+      transactionIsolation: TRANSACTION_READ_COMMITTED
+      minimumIdle: 10
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${app.oauth.issuer-uri}
+
+  flyway:
+    enabled: true
+    locations:
+      - classpath:db/migration/postgresql/dev
+
+  thymeleaf:
+    enabled: true
+
+  groovy:
+    template:
+      check-template-location: false
+
+app:
+  eureka:
+    port: 9000
+
+  oauth:
+    issuer-uri: http://localhost:8080/realms/payment-request
+
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 60
+  client:
+    enabled: false
+    register-with-eureka: true
+    fetch-registry: true
+    region: ap-southeast-1
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${app.eureka.port}/eureka
+    healthcheck:
+      enabled: true
+
+logging:
+  file.name: /tmp/aclogistics/coe-prototype.log
+  level:
+    root: INFO
+    org.aclogistics.coe: INFO
