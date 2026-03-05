@@ -8,7 +8,7 @@ import org.aclogistics.coe.configuration.utility.SecurityUtility;
  * @author Rosendo Coquilla
  */
 @Data
-public class CreateCoeRequestDto implements Dto {
+public class ApplyCertificateDto implements Dto {
 
     @Serial
     private static final long serialVersionUID = 1093712730365435926L;
