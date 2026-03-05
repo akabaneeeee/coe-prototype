@@ -19,7 +19,7 @@ import org.thymeleaf.context.Context;
 @RequiredArgsConstructor
 public class HtmlTemplateRenderer {
 
-    @Value("${app.signature}")
+    @Value("${signature}")
     private String signature;
 
     private final TemplateEngine templateEngine;
