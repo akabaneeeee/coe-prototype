@@ -1,4 +1,4 @@
-package org.aclogistics.coe.configuration.service;
+package org.aclogistics.coe.service;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import java.io.ByteArrayOutputStream;

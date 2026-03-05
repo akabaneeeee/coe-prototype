@@ -1,4 +1,4 @@
-package org.aclogistics.coe.configuration.utility;
+package org.aclogistics.coe.utility;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

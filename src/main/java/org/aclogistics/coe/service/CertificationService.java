@@ -1,7 +1,6 @@
-package org.aclogistics.coe.configuration.service;
+package org.aclogistics.coe.service;
 
 import jakarta.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

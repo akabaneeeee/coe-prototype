@@ -1,4 +1,4 @@
-package org.aclogistics.coe.configuration.dto;
+package org.aclogistics.coe.dto;
 
 import java.util.List;
 

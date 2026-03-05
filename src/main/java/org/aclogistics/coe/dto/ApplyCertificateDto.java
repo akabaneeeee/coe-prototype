@@ -1,8 +1,8 @@
-package org.aclogistics.coe.configuration.dto;
+package org.aclogistics.coe.dto;
 
 import java.io.Serial;
 import lombok.Data;
-import org.aclogistics.coe.configuration.utility.SecurityUtility;
+import org.aclogistics.coe.utility.SecurityUtility;
 
 /**
  * @author Rosendo Coquilla

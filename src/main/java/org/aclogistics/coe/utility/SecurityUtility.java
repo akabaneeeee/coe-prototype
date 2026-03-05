@@ -1,8 +1,8 @@
-package org.aclogistics.coe.configuration.utility;
+package org.aclogistics.coe.utility;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.configuration.dto.AuthorizedUser;
+import org.aclogistics.coe.dto.AuthorizedUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;

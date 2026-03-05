@@ -1,10 +1,10 @@
-package org.aclogistics.coe.configuration.service;
+package org.aclogistics.coe.service;
 
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.configuration.utility.DateTimeHelper;
+import org.aclogistics.coe.utility.DateTimeHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
