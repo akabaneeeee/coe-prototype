@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CertificationService {
+public class EmploymentCertificateService {
 
     private final HtmlTemplateRenderer htmlTemplateRenderer;
     private final PdfGeneratorService pdfGeneratorService;
