@@ -27,6 +27,10 @@ spring:
   application:
     name: coe-prototype
 
+  profiles:
+    include:
+      - watermark
+
   main:
     allow-bean-definition-overriding: true
 

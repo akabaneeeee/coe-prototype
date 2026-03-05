@@ -1,0 +1,43 @@
+watermark:
+  units:
+    UF:
+      logoPath: /static/img/u-logo.png
+      imageWidth: 300
+      imageHeight: 180
+      x: 55
+      y: -5
+
+    AIR21:
+      logoPath: /static/img/a21-logo.png
+      imageWidth: 300
+      imageHeight: 180
+      x: 10
+      y: -10
+
+    ACL:
+      logoPath: /static/img/acl-logo.png
+      imageWidth: 500
+      imageHeight: 180
+      x: 30
+      y: -35
+
+    AMC:
+      logoPath: /static/img/amove-logo.png
+      imageWidth: 360
+      imageHeight: 180
+      x: 10
+      y: -20
+
+    CHI:
+      logoPath: /static/img/chi-logo.png
+      imageWidth: 500
+      imageHeight: 120
+      x: 10
+      y: -15
+
+    LGC:
+      logoPath: /static/img/lgc-logo.png
+      imageWidth: 360
+      imageHeight: 180
+      x: 15
+      y: -20
