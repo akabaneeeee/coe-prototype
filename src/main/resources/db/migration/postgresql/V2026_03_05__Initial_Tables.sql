@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS certificate_application_milestone (
 );
 
 CREATE INDEX IF NOT EXISTS cam_certificate_application_id_idx ON certificate_application_milestone (certificate_application_id);
+CREATE INDEX IF NOT EXISTS cam_status_idx ON certificate_application_milestone (status);
+CREATE INDEX IF NOT EXISTS cam_transitioned_dt_idx ON certificate_application_milestone (transitioned_dt);
 
 -- Generated Employment Certificate
 CREATE SEQUENCE IF NOT EXISTS generated_certificate_id_seq AS INT4 INCREMENT 50 START 1000;

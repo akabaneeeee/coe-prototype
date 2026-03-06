@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.aclogistics.coe.domain.enumeration.Status;
 
 /**
  * @author Rosendo Coquilla
@@ -17,7 +18,7 @@ public class CertificateApplicationMilestone implements Model {
     private static final long serialVersionUID = -6063963105284753567L;
 
     private Integer id;
-    private String status;
+    private Status status;
     private Map<String, String> statusDetails;
     private String transitionedBy;
     private LocalDateTime transitionedDt;
