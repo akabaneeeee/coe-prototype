@@ -18,14 +18,14 @@ server:
 springdoc:
   default-produces-media-type: 'application/json'
   api-docs:
-    path: '/coe/api-docs'
+    path: '/ecgn/api-docs'
   swagger-ui:
-    url: '/coe/api-docs'
-    path: '/coe/swagger-ui.html'
+    url: '/ecgn/api-docs'
+    path: '/ecgn/swagger-ui.html'
 
 spring:
   application:
-    name: coe-prototype
+    name: employment-certificate-generator
 
   profiles:
     include:
@@ -34,6 +34,11 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -54,6 +59,17 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+    properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: "_history"
+      hibernate:
+        generate_statistics: false
+        jdbc:
+          batch_size: 50
+        order_updates: true
+        order_inserts: true
 
   security:
     oauth2:
@@ -64,7 +80,7 @@ spring:
   flyway:
     enabled: true
     locations:
-      - classpath:db/migration/postgresql/dev
+      - classpath:db/migration/postgresql
 
   thymeleaf:
     enabled: true
@@ -97,7 +113,7 @@ eureka:
       enabled: true
 
 logging:
-  file.name: /tmp/aclogistics/coe-prototype.log
+  file.name: /tmp/aclogistics/employment-certificate-generator.log
   level:
     root: INFO
     org.aclogistics.coe: INFO
