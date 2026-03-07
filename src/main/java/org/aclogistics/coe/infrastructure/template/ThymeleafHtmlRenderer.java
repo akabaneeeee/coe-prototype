@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.aclogistics.coe.domain.port.IHtmlTemplateRenderer;
 import org.aclogistics.coe.domain.utility.DateTimeHelper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -15,15 +16,16 @@ import org.thymeleaf.context.Context;
  */
 @Slf4j
 @Setter
-@Service
+@Component
 @RequiredArgsConstructor
-public class HtmlTemplateRenderer {
+public class ThymeleafHtmlRenderer implements IHtmlTemplateRenderer {
 
     @Value("${signature}")
     private String signature;
 
     private final TemplateEngine templateEngine;
 
+    @Override
     public String render() {
         Context context = new Context();
         context.setVariable("dateCreated", DateTimeHelper.convertToFullDateFormat(LocalDate.now()));

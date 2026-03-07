@@ -26,7 +26,6 @@ import org.aclogistics.coe.domain.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.enumeration.Department;
 import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
 import org.aclogistics.coe.domain.enumeration.Purpose;
-import org.aclogistics.coe.infrastructure.jpa.JpaEntity;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -80,6 +79,7 @@ public class CertificateApplicationEntity implements JpaEntity {
     private Department department;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private EmploymentStatus employmentStatus;
 
     @Column
@@ -89,6 +89,7 @@ public class CertificateApplicationEntity implements JpaEntity {
     private BigDecimal annualCompensation;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private Purpose purpose;
 
     @JdbcTypeCode(SqlTypes.JSON)

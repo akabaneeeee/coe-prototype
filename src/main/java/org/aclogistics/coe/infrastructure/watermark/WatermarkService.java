@@ -7,24 +7,26 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.aclogistics.coe.infrastructure.watermark.properties.WatermarkProperties;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.graphics.state.PDExtendedGraphicsState;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Rosendo Coquilla
  */
 @Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
-public class WatermarkService {
+public class WatermarkService implements IWatermarkService {
 
     private final WatermarkProperties properties;
 
+    @Override
     public byte[] addWatermark(byte[] pdfBytes, BusinessUnit businessUnit) {
         var config = properties.getUnits().get(businessUnit);
 

@@ -19,7 +19,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aclogistics.coe.domain.enumeration.Status;
-import org.aclogistics.coe.infrastructure.jpa.JpaEntity;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -36,7 +35,7 @@ public class CertificateApplicationMilestoneEntity implements JpaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "certificate_application_milestone_id_seq_gen")
-    @SequenceGenerator(name = "certificate_application_milestone_id_seq_gen", sequenceName = "certificate_application_milestone_id_seq_seq", initialValue = 1000)
+    @SequenceGenerator(name = "certificate_application_milestone_id_seq_gen", sequenceName = "certificate_application_milestone_id_seq", initialValue = 1000)
     private Integer id;
 
     @Column

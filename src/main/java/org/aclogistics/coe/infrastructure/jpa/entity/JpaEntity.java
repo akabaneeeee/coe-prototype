@@ -1,4 +1,4 @@
-package org.aclogistics.coe.infrastructure.jpa;
+package org.aclogistics.coe.infrastructure.jpa.entity;
 
 /**
  * @author Rosendo Coquilla

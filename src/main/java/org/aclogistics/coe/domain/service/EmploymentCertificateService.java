@@ -1,15 +1,16 @@
-package org.aclogistics.coe.domain;
+package org.aclogistics.coe.domain.service;
 
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aclogistics.coe.domain.dto.ApplyCertificateDto;
 import org.aclogistics.coe.domain.enumeration.BusinessUnit;
-import org.aclogistics.coe.infrastructure.pdf.PdfGeneratorService;
-import org.aclogistics.coe.infrastructure.template.HtmlTemplateRenderer;
-import org.aclogistics.coe.infrastructure.watermark.WatermarkService;
+import org.aclogistics.coe.domain.port.IHtmlTemplateRenderer;
+import org.aclogistics.coe.domain.port.IPdfRendererService;
+import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,13 +19,22 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmploymentCertificateService {
+public class EmploymentCertificateService implements IEmploymentCertificateService {
 
-    private final HtmlTemplateRenderer htmlTemplateRenderer;
-    private final PdfGeneratorService pdfGeneratorService;
-    private final WatermarkService watermarkService;
+    private final IHtmlTemplateRenderer htmlTemplateRenderer;
+    private final IPdfRendererService pdfGeneratorService;
+    private final IWatermarkService watermarkService;
 
-    @PostConstruct
+    @Override
+    public void apply(ApplyCertificateDto dto) {
+        if (Objects.isNull(dto)) {
+            throw new IllegalArgumentException("Please provide a valid certificate application form");
+        }
+
+        log.info("Applying certificate application form: {}", dto);
+    }
+
+    @Override
     public void generateCertificate() {
         String htmlContent = htmlTemplateRenderer.render();
         byte[] originalPdfBytes = pdfGeneratorService.generate(htmlContent);

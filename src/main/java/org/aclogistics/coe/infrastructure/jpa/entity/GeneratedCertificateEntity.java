@@ -15,7 +15,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.aclogistics.coe.infrastructure.jpa.JpaEntity;
 
 /**
  * @author Rosendo Coquilla
@@ -29,12 +28,12 @@ import org.aclogistics.coe.infrastructure.jpa.JpaEntity;
 public class GeneratedCertificateEntity implements JpaEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "certificate_application_milestone_id_seq_gen")
-    @SequenceGenerator(name = "certificate_application_milestone_id_seq_gen", sequenceName = "certificate_application_milestone_id_seq_seq", initialValue = 1000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generated_certificate_id_seq_gen")
+    @SequenceGenerator(name = "generated_certificate_id_seq_gen", sequenceName = "generated_certificate_id_seq", initialValue = 1000)
     private Integer id;
 
     @Column
-    private Integer version;
+    private Short version;
 
     @Column(name = "s3_key")
     private String s3Key;
@@ -43,10 +42,10 @@ public class GeneratedCertificateEntity implements JpaEntity {
     private String s3Bucket;
 
     @Column
-    private String transitionedBy;
+    private String generatedBy;
 
     @Column
-    private LocalDateTime transitionedDt;
+    private LocalDateTime generatedDt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "certificate_application_id", nullable = false)
