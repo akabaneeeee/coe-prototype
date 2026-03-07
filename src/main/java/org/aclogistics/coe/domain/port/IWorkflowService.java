@@ -1,6 +1,6 @@
 package org.aclogistics.coe.domain.port;
 
-import org.aclogistics.coe.domain.dto.StateTransition;
+import org.aclogistics.coe.domain.dto.transition.StateTransition;
 import org.aclogistics.coe.domain.enumeration.Status;
 
 /**

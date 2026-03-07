@@ -2,7 +2,7 @@ package org.aclogistics.coe.domain.utility;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.AuthorizedUser;
+import org.aclogistics.coe.domain.dto.user.AuthorizedUser;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;

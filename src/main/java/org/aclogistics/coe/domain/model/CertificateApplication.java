@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aclogistics.coe.domain.enumeration.BusinessUnit;
@@ -18,7 +20,9 @@ import org.aclogistics.coe.domain.enumeration.Purpose;
  * @author Rosendo Coquilla
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class CertificateApplication implements Model {
 
     @Serial
@@ -35,7 +39,10 @@ public class CertificateApplication implements Model {
     private String position;
     private Department department;
     private EmploymentStatus employmentStatus;
-    private boolean withCompensation;
+
+    @Builder.Default
+    private boolean withCompensation = true;
+
     private BigDecimal annualCompensation;
     private Purpose purpose;
     private Map<String, String> additionalInfo;
@@ -45,6 +52,20 @@ public class CertificateApplication implements Model {
     private LocalDateTime requestedDt;
     private String modifiedBy;
     private LocalDateTime modifiedDt;
+
+    @Builder.Default
     private Set<CertificateApplicationMilestone> milestones = new LinkedHashSet<>();
+
+    @Builder.Default
     private Set<GeneratedCertificate> generatedCertificates = new LinkedHashSet<>();
+
+    /**
+     * Used to create the initial milestone upon creation of the application
+     *
+     * @param requestedBy - the user who requested the application
+     * @param requestedDt - the date and time the application was requested
+     */
+    public void initializeMilestone(String requestedBy, LocalDateTime requestedDt) {
+        this.milestones.add(new CertificateApplicationMilestone(requestedBy, requestedDt));
+    }
 }

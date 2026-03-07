@@ -1,20 +1,30 @@
-package org.aclogistics.coe.domain.dto;
+package org.aclogistics.coe.domain.dto.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.Objects;
 import lombok.Data;
+import org.aclogistics.coe.domain.dto.Dto;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.AdditionalInfo;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.ApprovedLeaveApplicationDetails;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.SchoolRequirementsDetails;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.TravelPurposesDetails;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.VisaApplicationDetails;
 import org.aclogistics.coe.domain.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.enumeration.Department;
 import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
 import org.aclogistics.coe.domain.enumeration.Purpose;
-import org.apache.commons.collections4.MapUtils;
 
 /**
  * @author Rosendo Coquilla
@@ -57,8 +67,20 @@ public class ApplyCertificateDto implements Dto {
     @NotNull(message = "Please provide your purpose")
     private Purpose purpose;
 
-    // TODO: Refactor this to be a JsonSubType based on Purpose once the POC has been accepted
-    private Map<String, String> additionalInfo;
+    @Valid
+    @JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = As.EXTERNAL_PROPERTY,
+        property = "purpose",
+        visible = true
+    )
+    @JsonSubTypes({
+        @JsonSubTypes.Type(value = ApprovedLeaveApplicationDetails.class, name = "APPROVED_LEAVE_APPLICATION"),
+        @JsonSubTypes.Type(value = VisaApplicationDetails.class, name = "VISA_APPLICATION"),
+        @JsonSubTypes.Type(value = SchoolRequirementsDetails.class, name = "SCHOOL_REQUIREMENTS"),
+        @JsonSubTypes.Type(value = TravelPurposesDetails.class, name = "TRAVEL_PURPOSES")
+    })
+    private AdditionalInfo additionalInfo;
 
     @NotBlank(message = "Please provide the addressee of the certificate")
     private String addressee;
@@ -69,38 +91,15 @@ public class ApplyCertificateDto implements Dto {
 
     private String requestedBy = "sen";// SecurityUtility.getUserFullName();
 
-    @AssertTrue(message = "Please provide your destination, and line manager's name and email")
-    public boolean isVisaApplicationPurposeWithAdditionalInfoValid() {
-        if (!Purpose.VISA_APPLICATION.equals(this.purpose)) {
-            return true;
-        }
-
-        return MapUtils.isNotEmpty(this.additionalInfo)
-            && this.additionalInfo.containsKey("destination")
-            && this.additionalInfo.containsKey("line_manager_first_name")
-            && this.additionalInfo.containsKey("line_manager_last_name")
-            && this.additionalInfo.containsKey("line_manager_email");
-    }
-
-    @AssertTrue(message = "Please provide your line manager's name and email")
-    public boolean isApprovedLeaveApplicationPurposeWithAdditionalInfoValid() {
-        if (!Purpose.APPROVED_LEAVE_APPLICATION.equals(this.purpose)) {
-            return true;
-        }
-
-        return MapUtils.isNotEmpty(this.additionalInfo)
-            && this.additionalInfo.containsKey("line_manager_first_name")
-            && this.additionalInfo.containsKey("line_manager_last_name")
-            && this.additionalInfo.containsKey("line_manager_email");
-    }
-
-    @AssertTrue(message = "Please indicate to whom you are requesting the certificate")
-    public boolean isSchoolRequirementsPurposeWithAdditionalInfoValid() {
-        if (!Purpose.SCHOOL_REQUIREMENTS.equals(this.purpose)) {
-            return true;
-        }
-
-        return MapUtils.isNotEmpty(this.additionalInfo)
-            && this.additionalInfo.containsKey("beneficiary");
+    @JsonIgnore
+    @AssertTrue(message = "You must provide the needed additional information for the purpose that you have selected")
+    public boolean isAdditionalInfoValid() {
+        return switch (this.purpose) {
+            case VISA_APPLICATION,
+                 TRAVEL_PURPOSES,
+                 APPROVED_LEAVE_APPLICATION,
+                 SCHOOL_REQUIREMENTS -> Objects.nonNull(this.additionalInfo);
+            default -> true;
+        };
     }
 }

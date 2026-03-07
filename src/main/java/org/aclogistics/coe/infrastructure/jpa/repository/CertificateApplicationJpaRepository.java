@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * @author Rosendo Coquilla
  */
-public interface CertificateApplicationRepository
+public interface CertificateApplicationJpaRepository
     extends JpaRepository<CertificateApplicationEntity, Integer>,
     JpaSpecificationExecutor<CertificateApplicationEntity> {
 

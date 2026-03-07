@@ -1,4 +1,4 @@
-package org.aclogistics.coe.domain.dto;
+package org.aclogistics.coe.domain.dto.user;
 
 import java.util.List;
 

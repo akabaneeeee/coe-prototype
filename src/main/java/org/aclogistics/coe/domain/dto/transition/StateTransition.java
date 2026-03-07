@@ -1,4 +1,4 @@
-package org.aclogistics.coe.domain.dto;
+package org.aclogistics.coe.domain.dto.transition;
 
 import java.util.Map;
 import lombok.AllArgsConstructor;

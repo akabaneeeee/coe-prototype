@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.StateTransition;
+import org.aclogistics.coe.domain.dto.transition.StateTransition;
 import org.aclogistics.coe.domain.enumeration.Event;
 import org.aclogistics.coe.domain.enumeration.Status;
 import org.aclogistics.coe.domain.exception.StatusTransitionFailedException;

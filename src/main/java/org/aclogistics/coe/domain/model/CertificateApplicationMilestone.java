@@ -22,4 +22,10 @@ public class CertificateApplicationMilestone implements Model {
     private Map<String, String> statusDetails;
     private String transitionedBy;
     private LocalDateTime transitionedDt;
+
+    public CertificateApplicationMilestone(String requestedBy, LocalDateTime requestedDt) {
+        this.status = Status.REQUESTED;
+        this.transitionedBy = requestedBy;
+        this.transitionedDt = requestedDt;
+    }
 }

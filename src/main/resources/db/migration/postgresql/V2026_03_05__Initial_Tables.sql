@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS certificate_application (
   place_of_addressee    VARCHAR(255),
   requested_by          VARCHAR(100)      NOT NULL,
   requested_dt          TIMESTAMP         NOT NULL,
-  modified_by           VARCHAR(100)      NOT NULL,
-  modified_dt           TIMESTAMP         NOT NULL,
+  modified_by           VARCHAR(100),
+  modified_dt           TIMESTAMP,
 
   PRIMARY KEY (id),
   CONSTRAINT reference_number_uq UNIQUE(reference_number)
@@ -39,7 +39,7 @@ CREATE INDEX IF NOT EXISTS ca_modified_dt_idx ON certificate_application (modifi
 CREATE SEQUENCE IF NOT EXISTS certificate_application_milestone_id_seq AS INT4 INCREMENT 50 START 1000;
 
 CREATE TABLE IF NOT EXISTS certificate_application_milestone (
-  id                              INT4              NOT NULL,
+  id                              INT4              DEFAULT nextval('certificate_application_milestone_id_seq'),
   certificate_application_id      INT4              NOT NULL,
   status                          VARCHAR(100)      NOT NULL,
   status_details                  JSON,
@@ -105,8 +105,8 @@ CREATE TABLE IF NOT EXISTS certificate_application_history (
   additional_info       JSON,
   requested_by          VARCHAR(100)      NOT NULL,
   requested_dt          TIMESTAMP         NOT NULL,
-  modified_by           VARCHAR(100)      NOT NULL,
-  modified_dt           TIMESTAMP         NOT NULL,
+  modified_by           VARCHAR(100),
+  modified_dt           TIMESTAMP,
 
   PRIMARY KEY (id)
 );

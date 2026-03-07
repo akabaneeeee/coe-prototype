@@ -19,14 +19,14 @@ public interface CertificateApplicationMapper {
     CertificateApplicationEntity toEntity(CertificateApplication model);
 
     @AfterMapping
-    default void mapCertificateApplicationToMilestone(CertificateApplicationEntity entity, @MappingTarget CertificateApplication model) {
+    default void mapCertificateApplicationToMilestone(CertificateApplication model, @MappingTarget CertificateApplicationEntity entity) {
         if (CollectionUtils.isNotEmpty(model.getMilestones())) {
             entity.getMilestones().forEach(d -> d.setCertificateApplication(entity));
         }
     }
 
     @AfterMapping
-    default void mapCertificateApplicationToGeneratedCertificate(CertificateApplicationEntity entity, @MappingTarget CertificateApplication model) {
+    default void mapCertificateApplicationToGeneratedCertificate(CertificateApplication model, @MappingTarget CertificateApplicationEntity entity) {
         if (CollectionUtils.isNotEmpty(model.getGeneratedCertificates())) {
             entity.getGeneratedCertificates().forEach(d -> d.setCertificateApplication(entity));
         }
