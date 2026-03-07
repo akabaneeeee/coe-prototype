@@ -3,7 +3,6 @@ package org.aclogistics.coe.domain.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.io.Serial;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
 import lombok.Data;
