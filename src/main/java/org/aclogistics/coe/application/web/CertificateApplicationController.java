@@ -27,6 +27,7 @@ public class CertificateApplicationController {
     public ResponseEntity<Void> applyForCertificate(
         @RequestBody @Valid final ApplyCertificateDto request
     ) {
+        log.info("REST request received to apply for new employment certificate");
         employmentCertificateService.apply(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

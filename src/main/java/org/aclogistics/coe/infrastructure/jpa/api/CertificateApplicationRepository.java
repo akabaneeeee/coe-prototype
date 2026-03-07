@@ -33,7 +33,6 @@ public class CertificateApplicationRepository implements ICertificateApplication
 
     @Override
     @Transactional
-    @Retryable(retryFor = DuplicateReferenceNumberException.class, backoff = @Backoff(delay = 1000))
     public CertificateApplication save(CertificateApplication model) {
         if (Objects.isNull(model)) {
             throw new IllegalArgumentException("The provided model is null");

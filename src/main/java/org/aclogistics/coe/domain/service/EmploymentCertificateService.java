@@ -19,6 +19,9 @@ import org.aclogistics.coe.domain.port.IPdfRendererService;
 import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.aclogistics.coe.domain.service.idgenerator.IdGenerator;
 import org.aclogistics.coe.domain.utility.DateTimeHelper;
+import org.aclogistics.coe.infrastructure.jpa.exception.DuplicateReferenceNumberException;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,7 +41,9 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
     private final IWatermarkService watermarkService;
     private final ObjectMapper mapper;
 
+    // TODO: Test the retry logic if it is working as expected
     @Override
+    @Retryable(retryFor = DuplicateReferenceNumberException.class, backoff = @Backoff(delay = 1000))
     public void apply(ApplyCertificateDto dto) {
         if (Objects.isNull(dto)) {
             throw new IllegalArgumentException("Please provide a valid certificate application form");
