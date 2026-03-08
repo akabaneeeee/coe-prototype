@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS generated_certificate (
   id                                        INT4              DEFAULT nextval('generated_certificate_id_seq'),
   certificate_application_id                INT4              NOT NULL,
   "version"                                 INT2              NOT NULL,
+  file_name                                 VARCHAR(255)      NOT NULL,
   s3_key                                    VARCHAR(255)      NOT NULL,
   s3_bucket                                 VARCHAR(100)      NOT NULL,
   generated_by                              VARCHAR(100)      NOT NULL,

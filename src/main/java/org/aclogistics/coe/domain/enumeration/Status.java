@@ -9,11 +9,11 @@ import lombok.Getter;
 public enum Status {
     REQUESTED("Requested"),
     REJECTED("Rejected"),
-    LINE_MANAGER_FOR_APPROVAL("Line Manager for Approval"),
+    PENDING_LINE_MANAGER_APPROVAL("Pending Line Manager Approval"),
     LINE_MANAGER_APPROVED("Line Manager Approved"),
     HR_PROCESSING("HR Processing"),
     HR_APPROVED("HR Approved"),
-    CERTIFICATE_READY("Certificate Ready");
+    CERTIFICATE_READY("Employment Certificate Ready");
 
     private final String friendlyName;
 

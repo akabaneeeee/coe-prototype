@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
-import org.aclogistics.coe.domain.service.IEmploymentCertificateService;
+import org.aclogistics.coe.domain.service.application.IEmploymentCertificateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;

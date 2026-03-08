@@ -87,7 +87,7 @@ public class ApplyCertificateDto implements Dto {
 
     private String placeOfAddressee;
 
-    private String requesterEmail = "email@email.com";// SecurityUtility.getUserEmail();
+    private String requesterEmail = "rosendo.coquilla+requester@aclogistics.com.ph";// SecurityUtility.getUserEmail();
 
     private String requestedBy = "sen";// SecurityUtility.getUserFullName();
 

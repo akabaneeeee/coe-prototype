@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Rejected Application</title>
+</head>
+<body>
+    Good day <span th:text="${requestor_name}">Requestor Name</span>,<br><br>
+
+    <p>This is to notify you that your application for Certificate of Employment has been rejected.</p>
+
+    <table style="border-collapse: collapse;">
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Reference Number</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${reference_number}">ReferenceNumber</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Remarks</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${remarks}">Remarks</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Rejected By</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${rejected_by}">Requestor Name</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Date Rejected</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${rejected_date}">Date Filed</span>
+            </td>
+        </tr>
+    </table>
+
+    <p>
+      You may log in to the HR system to review remarks or make necessary changes: <a th:href="${hr_system_link}">View Application</a>
+    </p><br>
+
+    <p>
+      Thank you,<br>
+      HR System
+    </p><br>
+
+    <p><i>This is an automated message, please do not reply.</i></p>
+</body>
+</html>

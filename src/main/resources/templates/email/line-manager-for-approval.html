@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Application Line Manager for Approval</title>
+</head>
+<body>
+    Good day <span th:text="${approver_name}">Approver Name</span>,<br><br>
+
+    <p>A new application for Certificate of Employment has been submitted and requires your review:</p>
+
+    <table style="border-collapse: collapse;">
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Reference Number</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${reference_number}">Reference Number</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Purpose</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${purpose}">Purpose</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Requested By</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${requested_by}">Requested By</span>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 4px 8px 4px 0;"><strong>Date Filed</strong></td>
+            <td style="padding: 4px 4px 4px 0; text-align: center;">:</td>
+            <td style="padding: 4px 0;">
+                <span th:text="${requested_date}">Date Filled</span>
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        Please log in to the HR system to review this application: <a th:href="${hr_system_link}">View Application</a>
+    </p><br>
+
+    <p>
+      Thank you,<br>
+      HR System
+    </p><br>
+
+    <p><i>This is an automated message, please do not reply.</i></p>
+</body>
+</html>

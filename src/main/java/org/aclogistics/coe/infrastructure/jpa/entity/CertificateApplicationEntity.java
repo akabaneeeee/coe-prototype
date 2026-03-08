@@ -2,6 +2,7 @@ package org.aclogistics.coe.infrastructure.jpa.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ import org.aclogistics.coe.domain.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.enumeration.Department;
 import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
 import org.aclogistics.coe.domain.enumeration.Purpose;
+import org.aclogistics.coe.infrastructure.configuration.converter.TimezoneDateTimeConverter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -106,12 +108,14 @@ public class CertificateApplicationEntity implements JpaEntity {
     private String requestedBy;
 
     @Column
+    @Convert(converter = TimezoneDateTimeConverter.class)
     private LocalDateTime requestedDt;
 
     @Column
     private String modifiedBy;
 
     @Column
+    @Convert(converter = TimezoneDateTimeConverter.class)
     private LocalDateTime modifiedDt;
 
     @NotAudited

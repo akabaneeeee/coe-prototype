@@ -176,14 +176,14 @@
                 <tr>
                     <td class="label">Date</td>
                     <td class="colon">:</td>
-                    <td th:text="${dateCreated}">&lt;Date created&gt;</td>
+                    <td th:text="${date_created}">&lt;Date created&gt;</td>
                 </tr>
                 <tr>
                     <td class="label">To</td>
                     <td class="colon">:</td>
                     <td>
                         <span th:text="${addressee}">Embassy of Japan in the Philippines</span>
-                        <span th:if="${placeOfAddressee != null}" th:text="${placeOfAddressee}"><br/>2627 Roxas Boulevard, Pasay City, Metro Manila</span>
+                        <span th:if="${place_of_addressee != null}"><br/><span th:text="${place_of_addressee}">2627 Roxas Boulevard, Pasay City, Metro Manila</span></span>
                     </td>
                 </tr>
                 <tr>
@@ -207,20 +207,20 @@
             <!-- Main Body Content -->
             <div class="content">
                 <p>
-                    This is to certify that <strong th:text="${fullName}">&lt;EMPLOYEE'S FULL NAME&gt;</strong>,
-                    an employee of <span th:text="${businessUnit}">&lt;Business Unit Name&gt;</span>
-                    since <span th:text="${hireDate}">&lt;Hire date&gt;</span>.
-                    He/She is a <span th:text="${employeeStatus}">&lt;Employee status&gt;</span> employee
+                    This is to certify that <strong th:text="${full_name}">&lt;EMPLOYEE'S FULL NAME&gt;</strong>,
+                    an employee of <span th:text="${business_unit}">&lt;Business Unit Name&gt;</span>
+                    since <span th:text="${hire_date}">&lt;Hire date&gt;</span>.
+                    He/She is a <span th:text="${employee_status}">&lt;Employee status&gt;</span> employee
                     designated as the <span th:text="${position}">&lt;Position&gt;</span>
                     <span th:text="${department}">&lt;Department or Group Name&gt;</span>
-                    <span th:if="${!withCompensation}">.</span>
-                    <span th:if="${withCompensation}"> with an annual guaranteed compensation of
-                    Php <span th:text="${annualAmount}">&lt;annual amount&gt;</span></span>
+                    <span th:if="${!with_compensation}">.</span>
+                    <span th:if="${with_compensation}"> with an annual guaranteed compensation of
+                    Php <span th:text="${annual_amount}">&lt;annual amount&gt;</span></span>
                 </p>
 
                 <p>
                     This certification is being issued upon the request of
-                    <strong>MR./MS. <span th:text="${lastName}">&lt;LAST NAME&gt;</span></strong>
+                    <strong>MR./MS. <span th:text="${last_name}">&lt;LAST NAME&gt;</span></strong>
                     for his/her <span th:text="${purpose}">&lt;purpose of COE request&gt;</span>
                 </p>
 
@@ -244,7 +244,7 @@
                     <img th:src="${signature}" alt="signature" style="width: 180px; height: 80px; position: absolute; left: -15px;"/>
                 </div>
                 <p class="signer-name"><span th:text="${signatory}">&lt;CHRO or TR Manager&gt;</span></p>
-                <p class="signer-title"><span th:text="${signatoryDesignation}">Designation</span></p>
+                <p class="signer-title"><span th:text="${signatory_designation}">Designation</span></p>
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 package org.aclogistics.coe.infrastructure.jpa.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,6 +20,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.aclogistics.coe.domain.enumeration.Status;
+import org.aclogistics.coe.infrastructure.configuration.converter.TimezoneDateTimeConverter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -50,6 +52,7 @@ public class CertificateApplicationMilestoneEntity implements JpaEntity {
     private String transitionedBy;
 
     @Column
+    @Convert(converter = TimezoneDateTimeConverter.class)
     private LocalDateTime transitionedDt;
 
     @ManyToOne(fetch = FetchType.LAZY)

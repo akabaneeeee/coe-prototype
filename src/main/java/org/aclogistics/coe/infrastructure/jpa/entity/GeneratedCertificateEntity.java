@@ -1,6 +1,7 @@
 package org.aclogistics.coe.infrastructure.jpa.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.aclogistics.coe.infrastructure.configuration.converter.TimezoneDateTimeConverter;
 
 /**
  * @author Rosendo Coquilla
@@ -35,6 +37,9 @@ public class GeneratedCertificateEntity implements JpaEntity {
     @Column
     private Short version;
 
+    @Column
+    private String fileName;
+
     @Column(name = "s3_key")
     private String s3Key;
 
@@ -45,6 +50,7 @@ public class GeneratedCertificateEntity implements JpaEntity {
     private String generatedBy;
 
     @Column
+    @Convert(converter = TimezoneDateTimeConverter.class)
     private LocalDateTime generatedDt;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -24,7 +24,7 @@ public class TransitionApplicationDto implements Dto {
 
     private String reason;
     private String transitionedBy = "sen"; // SecurityUtility.getUserFullName();
-    private String requesterEmail = "rosendo.coquilla@aclogistics.com.ph"; // SecurityUtility.getUserEmail();
+    private String requesterEmail = "rosendo.coquilla+line-manager@aclogistics.com.ph"; // SecurityUtility.getUserEmail();
 
     @JsonIgnore
     @AssertTrue(message = "The rejection reason must be provided when rejecting an application")

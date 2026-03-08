@@ -1,4 +1,4 @@
-package org.aclogistics.coe.domain.service;
+package org.aclogistics.coe.domain.service.application;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,6 +26,7 @@ import org.aclogistics.coe.domain.port.IPdfRendererService;
 import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.aclogistics.coe.domain.port.IWorkflowService;
 import org.aclogistics.coe.domain.service.idgenerator.IdGenerator;
+import org.aclogistics.coe.domain.service.publisher.IDomainEventPublisher;
 import org.aclogistics.coe.domain.utility.DateTimeHelper;
 import org.aclogistics.coe.infrastructure.jpa.exception.DuplicateReferenceNumberException;
 import org.apache.commons.collections4.MapUtils;
@@ -46,11 +47,9 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
     private static final TypeReference<Map<String, String>> TYPE_REFERENCE = new TypeReference<>() {};
 
     private final ICertificateApplicationRepository certificateApplicationRepository;
-    private final IHtmlTemplateRenderer htmlTemplateRenderer;
-    private final IPdfRendererService pdfGeneratorService;
-    private final IWatermarkService watermarkService;
     private final ObjectMapper mapper;
     private final IWorkflowService workflowService;
+    private final IDomainEventPublisher  domainEventPublisher;
 
     @Override
     @Retryable(retryFor = DuplicateReferenceNumberException.class, backoff = @Backoff(delay = 1000))
@@ -97,7 +96,7 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
             throw new RecordNotFoundException("Unable to find the application with referenceNumber " + givenReferenceNumber);
         }
 
-        CertificateApplicationMilestone lastMilestone = foundApplication.getLastMilestone();
+        CertificateApplicationMilestone lastMilestone = foundApplication.getLatestMilestone();
 
         StateVariable stateVariable = buildStateVariable(dto, lastMilestone.getStatusDetails());
         Status newStatus = workflowService.transition(
@@ -115,24 +114,26 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
             .build();
 
         foundApplication.addMilestone(newMilestone);
-        certificateApplicationRepository.save(foundApplication);
+        CertificateApplication updatedApplication = certificateApplicationRepository.save(foundApplication);
+
+        domainEventPublisher.publish(updatedApplication);
     }
 
-    @Override
-    public void generateCertificate() {
-        String htmlContent = htmlTemplateRenderer.render();
-        byte[] originalPdfBytes = pdfGeneratorService.generate(htmlContent);
-
-        try {
-            Path outputPath = Path.of("src/main/resources/generated-coe.pdf");
-            Files.createDirectories(outputPath.getParent());
-
-            byte[] watermarkedPdfBytes = watermarkService.addWatermark(originalPdfBytes, BusinessUnit.AMC);
-            Files.write(outputPath, watermarkedPdfBytes);
-        } catch (IOException ex) {
-            log.error("Error: ", ex);
-        }
-    }
+//    @Override
+//    public void generateCertificate() {
+//        String htmlContent = htmlTemplateRenderer.render();
+//        byte[] originalPdfBytes = pdfGeneratorService.generate(htmlContent);
+//
+//        try {
+//            Path outputPath = Path.of("src/main/resources/generated-coe.pdf");
+//            Files.createDirectories(outputPath.getParent());
+//
+//            byte[] watermarkedPdfBytes = watermarkService.addWatermark(originalPdfBytes, BusinessUnit.AMC);
+//            Files.write(outputPath, watermarkedPdfBytes);
+//        } catch (IOException ex) {
+//            log.error("Error: ", ex);
+//        }
+//    }
 
     private StateVariable buildStateVariable(
         TransitionApplicationDto dto, Map<Object, Object> currentDetails

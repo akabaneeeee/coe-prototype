@@ -1,4 +1,4 @@
-package org.aclogistics.coe.domain.service;
+package org.aclogistics.coe.domain.service.application;
 
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
@@ -10,5 +10,5 @@ public interface IEmploymentCertificateService {
 
     void apply(ApplyCertificateDto dto);
     void transitionToNextStatus(TransitionApplicationDto dto);
-    void generateCertificate();
+//    void generateCertificate();
 }

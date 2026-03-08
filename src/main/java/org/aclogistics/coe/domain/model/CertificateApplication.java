@@ -83,11 +83,11 @@ public class CertificateApplication implements Model {
     }
 
     /**
-     * Used to get the last milestone of the application
+     * Used to get the latest milestone of the application
      *
      * @return CertificateApplicationMilestone - the latest milestone
      */
-    public CertificateApplicationMilestone getLastMilestone() {
+    public CertificateApplicationMilestone getLatestMilestone() {
         return this.milestones.stream()
             .max(Comparator.comparing(CertificateApplicationMilestone::getTransitionedDt))
             .orElseThrow(() -> new RecordNotFoundException("The application has no existing milestones"));
@@ -100,5 +100,32 @@ public class CertificateApplication implements Model {
      */
     public void addMilestone(CertificateApplicationMilestone milestone) {
         this.milestones.add(milestone);
+    }
+
+    /**
+     * Used to construct the full name of the employee
+     *
+     * @return String - the full name
+     */
+    public String constructFullName() {
+        var cleanedMiddleInitial = this.middleInitial;
+        if (!this.middleInitial.contains(".")) {
+            cleanedMiddleInitial = this.middleInitial + ".";
+        }
+
+        return "%s %s %s".formatted(this.firstName, this.lastName, cleanedMiddleInitial);
+    }
+
+    public Short getNextCertificateVersion() {
+        Short latestVersion = this.generatedCertificates.stream()
+            .max(Comparator.comparing(GeneratedCertificate::getVersion))
+            .map(GeneratedCertificate::getVersion)
+            .orElse((short) 0);
+
+        return (short) (latestVersion + 1);
+    }
+
+    public void addGeneratedCertificate(GeneratedCertificate generatedCertificate) {
+        this.generatedCertificates.add(generatedCertificate);
     }
 }
