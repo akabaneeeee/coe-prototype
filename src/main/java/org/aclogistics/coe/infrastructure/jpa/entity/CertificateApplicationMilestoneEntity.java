@@ -44,7 +44,7 @@ public class CertificateApplicationMilestoneEntity implements JpaEntity {
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "json")
-    private Map<String, String> statusDetails;
+    private Map<Object, Object> statusDetails;
 
     @Column
     private String transitionedBy;

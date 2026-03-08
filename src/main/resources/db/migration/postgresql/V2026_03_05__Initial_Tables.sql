@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS certificate_application (
   modified_dt           TIMESTAMP,
 
   PRIMARY KEY (id),
-  CONSTRAINT reference_number_uq UNIQUE(reference_number)
+  CONSTRAINT ca_reference_number_uq UNIQUE(reference_number)
 );
 
 CREATE INDEX IF NOT EXISTS ca_requester_email_idx ON certificate_application (requester_email);
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS certificate_application_milestone (
   transitioned_dt                 TIMESTAMP         NOT NULL,
 
   PRIMARY KEY (id),
-  CONSTRAINT certificate_application_id_fk FOREIGN KEY (certificate_application_id) REFERENCES certificate_application (id)
+  CONSTRAINT cam_certificate_application_id_fk FOREIGN KEY (certificate_application_id) REFERENCES certificate_application (id)
 );
 
 CREATE INDEX IF NOT EXISTS cam_certificate_application_id_idx ON certificate_application_milestone (certificate_application_id);
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS generated_certificate (
   generated_dt                              TIMESTAMP         NOT NULL,
 
   PRIMARY KEY (id),
-  CONSTRAINT certificate_application_id_fk FOREIGN KEY (certificate_application_id) REFERENCES certificate_application (id)
+  CONSTRAINT gc_certificate_application_id_fk FOREIGN KEY (certificate_application_id) REFERENCES certificate_application (id)
 );
 
-CREATE INDEX IF NOT EXISTS gec_certificate_application_id_idx ON generated_certificate (certificate_application_id);
+CREATE INDEX IF NOT EXISTS gc_certificate_application_id_idx ON generated_certificate (certificate_application_id);
 
 -- Revision
 CREATE SEQUENCE IF NOT EXISTS revinfo_seq START 1 INCREMENT 50;

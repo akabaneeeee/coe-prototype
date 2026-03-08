@@ -4,8 +4,10 @@ import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +17,9 @@ import org.aclogistics.coe.domain.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.enumeration.Department;
 import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
 import org.aclogistics.coe.domain.enumeration.Purpose;
+import org.aclogistics.coe.domain.exception.RecordNotFoundException;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Rosendo Coquilla
@@ -67,5 +72,33 @@ public class CertificateApplication implements Model {
      */
     public void initializeMilestone(String requestedBy, LocalDateTime requestedDt) {
         this.milestones.add(new CertificateApplicationMilestone(requestedBy, requestedDt));
+    }
+
+    public String getLineManagerEmailIfExists() {
+        if (MapUtils.isEmpty(additionalInfo)) {
+            return null;
+        }
+
+        return StringUtils.defaultIfBlank(Objects.toString(additionalInfo.get("line_manager_email")), null);
+    }
+
+    /**
+     * Used to get the last milestone of the application
+     *
+     * @return CertificateApplicationMilestone - the latest milestone
+     */
+    public CertificateApplicationMilestone getLastMilestone() {
+        return this.milestones.stream()
+            .max(Comparator.comparing(CertificateApplicationMilestone::getTransitionedDt))
+            .orElseThrow(() -> new RecordNotFoundException("The application has no existing milestones"));
+    }
+
+    /**
+     * Used to add a new milestone
+     *
+     * @param milestone - the milestone to add
+     */
+    public void addMilestone(CertificateApplicationMilestone milestone) {
+        this.milestones.add(milestone);
     }
 }

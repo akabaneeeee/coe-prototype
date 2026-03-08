@@ -4,7 +4,6 @@ package org.aclogistics.coe.domain.enumeration;
  * @author Rosendo Coquilla
  */
 public enum Event {
-    APPLY,
     REJECT,
     ACCEPT,
     FOR_APPROVAL,

@@ -8,4 +8,5 @@ import org.aclogistics.coe.domain.model.CertificateApplication;
 public interface ICertificateApplicationRepository {
 
     CertificateApplication save(CertificateApplication model);
+    CertificateApplication findByReferenceNumber(String referenceNumber);
 }

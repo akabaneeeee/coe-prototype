@@ -3,6 +3,8 @@ package org.aclogistics.coe.domain.model;
 import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aclogistics.coe.domain.enumeration.Status;
@@ -11,7 +13,9 @@ import org.aclogistics.coe.domain.enumeration.Status;
  * @author Rosendo Coquilla
  */
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class CertificateApplicationMilestone implements Model {
 
     @Serial
@@ -19,7 +23,7 @@ public class CertificateApplicationMilestone implements Model {
 
     private Integer id;
     private Status status;
-    private Map<String, String> statusDetails;
+    private Map<Object, Object> statusDetails;
     private String transitionedBy;
     private LocalDateTime transitionedDt;
 

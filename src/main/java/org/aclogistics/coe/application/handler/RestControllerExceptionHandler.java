@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.aclogistics.coe.domain.exception.RecordNotFoundException;
+import org.aclogistics.coe.domain.exception.StatusTransitionFailedException;
+import org.aclogistics.coe.domain.exception.StatusVerificationFailedException;
+import org.aclogistics.coe.infrastructure.jpa.exception.CertificateApplicationPersistenceException;
+import org.aclogistics.coe.infrastructure.jpa.exception.DuplicateReferenceNumberException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -129,6 +134,71 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
 
         return createResponse(
             new ApiErrorDto(HttpStatus.BAD_REQUEST, errorMessage, ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(DuplicateReferenceNumberException.class)
+    public ResponseEntity<Object> handleDuplicateReferenceNumberException(
+        DuplicateReferenceNumberException ex, WebRequest request
+    ) {
+        var errorMessage = "Duplicate reference number";
+
+        logException(ex);
+
+        return createResponse(
+            new ApiErrorDto(HttpStatus.UNPROCESSABLE_ENTITY, errorMessage, ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(CertificateApplicationPersistenceException.class)
+    public ResponseEntity<Object> handleCertificateApplicationPersistenceException(
+        CertificateApplicationPersistenceException ex, WebRequest request
+    ) {
+        var errorMessage = "Internal Server Error";
+
+        logException(ex);
+
+        return createResponse(
+            new ApiErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage, ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(StatusTransitionFailedException.class)
+    public ResponseEntity<Object> handleStatusTransitionFailedException(
+        StatusTransitionFailedException ex, WebRequest request
+    ) {
+        var errorMessage = "Status transition failed";
+
+        logException(ex);
+
+        return createResponse(
+            new ApiErrorDto(HttpStatus.UNPROCESSABLE_ENTITY, errorMessage, ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(StatusVerificationFailedException.class)
+    public ResponseEntity<Object> handleStatusVerificationFailedException(
+        StatusVerificationFailedException ex, WebRequest request
+    ) {
+        var errorMessage = "Status verification failed";
+
+        logException(ex);
+
+        return createResponse(
+            new ApiErrorDto(HttpStatus.UNPROCESSABLE_ENTITY, errorMessage, ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<Object> handleRecordNotFoundException(
+        RecordNotFoundException ex, WebRequest request
+    ) {
+        var errorMessage = "Record not found";
+
+        logException(ex);
+
+        return createResponse(
+            new ApiErrorDto(HttpStatus.NOT_FOUND, errorMessage, ex.getMessage())
         );
     }
 

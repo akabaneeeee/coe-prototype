@@ -13,8 +13,6 @@ import org.aclogistics.coe.infrastructure.jpa.mapper.CertificateApplicationMappe
 import org.aclogistics.coe.infrastructure.jpa.repository.CertificateApplicationJpaRepository;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CertificateApplicationRepository implements ICertificateApplicationRepository {
 
-    private static final String REFERENCE_NUMBER_UNIQUE_KEY = "reference_number_uq";
+    private static final String REFERENCE_NUMBER_UNIQUE_KEY = "ca_reference_number_uq";
 
     private final CertificateApplicationJpaRepository repository;
     private final CertificateApplicationMapper mapper;
@@ -55,5 +53,15 @@ public class CertificateApplicationRepository implements ICertificateApplication
             log.error("An error occurred while saving the certificate application", ex);
             throw new CertificateApplicationPersistenceException();
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CertificateApplication findByReferenceNumber(String referenceNumber) {
+        if (StringUtils.isBlank(referenceNumber)) {
+            throw new IllegalArgumentException("The provided reference number is null or empty");
+        }
+
+        return mapper.toModel(repository.findByReferenceNumber(referenceNumber));
     }
 }

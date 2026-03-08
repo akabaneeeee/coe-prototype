@@ -4,9 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
+import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
 import org.aclogistics.coe.domain.service.IEmploymentCertificateService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,5 +33,17 @@ public class CertificateApplicationController {
         employmentCertificateService.apply(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/{reference-number}/transition")
+    public ResponseEntity<Void> transitionApplication(
+        @PathVariable("reference-number") final String referenceNumber,
+        @RequestBody @Valid final TransitionApplicationDto request
+    ) {
+        log.info("REST request received to transition application: {}", referenceNumber);
+        request.setReferenceNumber(referenceNumber);
+        employmentCertificateService.transitionToNextStatus(request);
+
+        return ResponseEntity.accepted().build();
     }
 }

@@ -11,4 +11,5 @@ public interface CertificateApplicationJpaRepository
     extends JpaRepository<CertificateApplicationEntity, Integer>,
     JpaSpecificationExecutor<CertificateApplicationEntity> {
 
+    CertificateApplicationEntity findByReferenceNumber(String referenceNumber);
 }
