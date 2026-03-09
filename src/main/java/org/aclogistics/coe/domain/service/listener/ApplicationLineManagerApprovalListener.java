@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.TemplateDetails;
+import org.aclogistics.coe.domain.dto.template.TemplateDetails;
 import org.aclogistics.coe.domain.dto.application.LineManagerDetails;
 import org.aclogistics.coe.domain.dto.email.EmailRequestDto;
 import org.aclogistics.coe.domain.model.event.ApplicationLineManagerApprovalEvent;

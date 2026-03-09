@@ -3,7 +3,7 @@ package org.aclogistics.coe.infrastructure.template;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.TemplateDetails;
+import org.aclogistics.coe.domain.dto.template.TemplateDetails;
 import org.aclogistics.coe.domain.port.IHtmlTemplateRenderer;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;

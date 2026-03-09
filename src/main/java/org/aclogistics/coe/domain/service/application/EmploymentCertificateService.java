@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
 import org.aclogistics.coe.domain.dto.application.CertificateApplicationDetails;
 import org.aclogistics.coe.domain.dto.application.CertificateApplicationMilestoneDetails;
 import org.aclogistics.coe.domain.dto.application.GeneratedCertificateDetails;
+import org.aclogistics.coe.domain.dto.application.UpdateApplicationDetails;
 import org.aclogistics.coe.domain.dto.application.additionalinfo.AdditionalInfo;
 import org.aclogistics.coe.domain.dto.application.additionalinfo.HasLineManagerEmail;
 import org.aclogistics.coe.domain.dto.application.filtered.GetFilteredApplicationDto;
@@ -232,5 +234,65 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
         }
 
         return details;
+    }
+
+    @Override
+    public void updateApplication(UpdateApplicationDetails dto) {
+        if (Objects.isNull(dto)) {
+            throw new IllegalArgumentException("Please provide a valid request");
+        }
+
+        CertificateApplication foundApplication = certificateApplicationRepository.findByReferenceNumber(dto.getReferenceNumber());
+
+        if (Objects.isNull(foundApplication)) {
+            throw new RecordNotFoundException("Unable to find the application with referenceNumber " + dto.getReferenceNumber());
+        }
+
+        var updatedFields = new HashSet<String>();
+        if (Objects.nonNull(dto.getBusinessUnit()) && !foundApplication.getBusinessUnit().equals(dto.getBusinessUnit())) {
+            foundApplication.setBusinessUnit(dto.getBusinessUnit());
+            updatedFields.add("Business Unit");
+        }
+
+        if (Objects.nonNull(dto.getHiredDate()) && !foundApplication.getHiredDate().equals(dto.getHiredDate())) {
+            foundApplication.setHiredDate(dto.getHiredDate());
+            updatedFields.add("Hired Date");
+        }
+
+        if (Objects.nonNull(dto.getEmploymentStatus()) && !foundApplication.getEmploymentStatus().equals(dto.getEmploymentStatus())) {
+            foundApplication.setEmploymentStatus(dto.getEmploymentStatus());
+            updatedFields.add("Employment Status");
+        }
+
+        if (StringUtils.isNotBlank(dto.getPosition()) && !foundApplication.getPosition().equalsIgnoreCase(dto.getPosition().trim())) {
+            foundApplication.setPosition(dto.getPosition().trim());
+            updatedFields.add("Position");
+        }
+
+        if (Objects.nonNull(dto.getDepartment()) && !foundApplication.getDepartment().equals(dto.getDepartment())) {
+            foundApplication.setDepartment(dto.getDepartment());
+            updatedFields.add("Department");
+        }
+
+        if (Objects.nonNull(dto.getWithCompensation()) && Objects.equals(foundApplication.isWithCompensation(), dto.getWithCompensation())) {
+            foundApplication.setWithCompensation(dto.getWithCompensation());
+            updatedFields.add("With Compensation");
+        }
+
+        if (foundApplication.isWithCompensation() && Objects.nonNull(dto.getAnnualCompensation())) {
+            foundApplication.setAnnualCompensation(dto.getAnnualCompensation());
+            updatedFields.add("Annual Compensation");
+        }
+
+        if (CollectionUtils.isEmpty(updatedFields)) {
+            log.info("The application with reference number {} has no updated fields, skipping update", dto.getReferenceNumber());
+            return;
+        }
+
+        foundApplication.setModifiedBy(dto.getUpdatedBy());
+        foundApplication.setModifiedDt(DateTimeHelper.getTodayInPHTDefaultFormat());
+
+        certificateApplicationRepository.save(foundApplication);
+        log.info("The application with reference number {} has been updated with the following fields: {}", dto.getReferenceNumber(), String.join(", ", updatedFields));
     }
 }

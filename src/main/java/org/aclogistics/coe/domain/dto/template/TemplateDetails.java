@@ -1,4 +1,4 @@
-package org.aclogistics.coe.domain.dto;
+package org.aclogistics.coe.domain.dto.template;
 
 import java.util.Map;
 

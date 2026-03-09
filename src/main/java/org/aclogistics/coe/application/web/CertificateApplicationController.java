@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
 import org.aclogistics.coe.domain.dto.application.CertificateApplicationDetails;
+import org.aclogistics.coe.domain.dto.application.UpdateApplicationDetails;
 import org.aclogistics.coe.domain.dto.application.filtered.GetFilteredApplicationDto;
 import org.aclogistics.coe.domain.dto.application.filtered.PaginatedApplicationDto;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
@@ -12,6 +13,7 @@ import org.aclogistics.coe.domain.service.application.IEmploymentCertificateServ
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -64,5 +66,17 @@ public class CertificateApplicationController {
     ) {
         log.info("REST request received to get certificate application details: {}",  referenceNumber);
         return ResponseEntity.ok().body(employmentCertificateService.getApplicationDetails(referenceNumber));
+    }
+
+    @PatchMapping("/{reference-number}")
+    public ResponseEntity<CertificateApplicationDetails> updateApplicationDetails(
+        @PathVariable("reference-number") final String referenceNumber,
+        @RequestBody @Valid final UpdateApplicationDetails request
+    ) {
+        log.info("REST request received to update application details: {}",  referenceNumber);
+        request.setReferenceNumber(referenceNumber);
+        employmentCertificateService.updateApplication(request);
+
+        return ResponseEntity.accepted().build();
     }
 }

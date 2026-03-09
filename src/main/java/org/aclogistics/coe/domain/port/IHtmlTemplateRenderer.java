@@ -1,6 +1,6 @@
 package org.aclogistics.coe.domain.port;
 
-import org.aclogistics.coe.domain.dto.TemplateDetails;
+import org.aclogistics.coe.domain.dto.template.TemplateDetails;
 
 /**
  * @author Rosendo Coquilla

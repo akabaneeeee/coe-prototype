@@ -10,7 +10,7 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.TemplateDetails;
+import org.aclogistics.coe.domain.dto.template.TemplateDetails;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
 import org.aclogistics.coe.domain.dto.upload.UploadFileResultDto;
 import org.aclogistics.coe.domain.model.enumeration.Event;
