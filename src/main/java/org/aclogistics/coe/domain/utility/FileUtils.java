@@ -1,18 +1,13 @@
 package org.aclogistics.coe.domain.utility;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.exception.FileProcessingException;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author Rosendo Coquilla

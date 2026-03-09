@@ -1,5 +1,7 @@
 package org.aclogistics.coe.domain.dto.application.additionalinfo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -12,9 +14,10 @@ import lombok.Data;
  * @author Rosendo Coquilla
  */
 @Data
+@JsonInclude(Include.NON_NULL)
 @JsonTypeName("VISA_APPLICATION")
 @JsonNaming(SnakeCaseStrategy.class)
-public class VisaApplicationDetails implements AdditionalInfo {
+public class VisaApplicationDetails implements AdditionalInfo, HasLineManagerEmail {
 
     @Serial
     private static final long serialVersionUID = 1250157949607728884L;

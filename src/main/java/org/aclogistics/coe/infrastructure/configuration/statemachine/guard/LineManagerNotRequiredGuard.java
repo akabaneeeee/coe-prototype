@@ -28,7 +28,7 @@ public class LineManagerNotRequiredGuard implements Guard<Status, Event> {
         var referenceNumber = Objects.toString(variables.get("reference_number"));
 
         CertificateApplication application = repository.findByReferenceNumber(referenceNumber);
-        String lineManager = application.getLineManagerEmailIfExists();
+        String lineManager = application.getLineManagerEmail();
 
         if (StringUtils.isNotBlank(lineManager)) {
             log.info("This application has line manager email, denying transition...");

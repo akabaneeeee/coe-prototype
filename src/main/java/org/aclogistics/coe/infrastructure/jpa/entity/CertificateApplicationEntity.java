@@ -99,6 +99,9 @@ public class CertificateApplicationEntity implements JpaEntity {
     private Map<String, String> additionalInfo;
 
     @Column
+    private String lineManagerEmail;
+
+    @Column
     private String addressee;
 
     @Column

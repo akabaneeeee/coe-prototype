@@ -11,9 +11,7 @@ import org.aclogistics.coe.domain.dto.TemplateDetails;
 import org.aclogistics.coe.domain.dto.application.LineManagerDetails;
 import org.aclogistics.coe.domain.email.EmailRequestDto;
 import org.aclogistics.coe.domain.event.ApplicationLineManagerApprovalEvent;
-import org.aclogistics.coe.domain.event.ApplicationRejectedEvent;
 import org.aclogistics.coe.domain.model.CertificateApplication;
-import org.aclogistics.coe.domain.model.CertificateApplicationMilestone;
 import org.aclogistics.coe.domain.port.IEmailNotificationSender;
 import org.aclogistics.coe.domain.port.IHtmlTemplateRenderer;
 import org.aclogistics.coe.domain.utility.DateTimeHelper;
@@ -57,7 +55,7 @@ public class ApplicationLineManagerApprovalListener {
         emailNotificationSender.send(
             EmailRequestDto.builder()
                 .source("HR System <hr.no-reply@aclogistics.com.ph>")
-                .to(Set.of(lineManagerDetails.email()))
+                .to(Set.of(application.getLineManagerEmail()))
                 .subject("[COE] Application %s requires your approval".formatted(application.getReferenceNumber()))
                 .htmlContent(htmlContent)
                 .build()

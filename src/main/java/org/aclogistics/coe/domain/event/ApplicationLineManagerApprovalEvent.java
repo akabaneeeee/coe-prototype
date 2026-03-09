@@ -1,8 +1,6 @@
 package org.aclogistics.coe.domain.event;
 
 import lombok.Getter;
-import org.aclogistics.coe.domain.dto.application.LineManagerDetails;
-import org.aclogistics.coe.domain.enumeration.Purpose;
 import org.aclogistics.coe.domain.model.CertificateApplication;
 import org.springframework.context.ApplicationEvent;
 

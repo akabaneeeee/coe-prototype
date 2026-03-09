@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS certificate_application (
   annual_compensation   DECIMAL(11,2),
   purpose               VARCHAR(100)      NOT NULL,
   additional_info       JSON,
+  line_manager_email    VARCHAR(100),
   addressee             VARCHAR(255)      NOT NULL,
   place_of_addressee    VARCHAR(255),
   requested_by          VARCHAR(100)      NOT NULL,
@@ -34,6 +35,7 @@ CREATE INDEX IF NOT EXISTS ca_department_idx ON certificate_application (departm
 CREATE INDEX IF NOT EXISTS ca_purpose_idx ON certificate_application (purpose);
 CREATE INDEX IF NOT EXISTS ca_requested_dt_idx ON certificate_application (requested_dt);
 CREATE INDEX IF NOT EXISTS ca_modified_dt_idx ON certificate_application (modified_dt);
+CREATE INDEX IF NOT EXISTS ca_line_manager_email_idx ON certificate_application (line_manager_email);
 
 -- Employment Certificate Application Milestone
 CREATE SEQUENCE IF NOT EXISTS certificate_application_milestone_id_seq AS INT4 INCREMENT 50 START 1000;
@@ -101,9 +103,10 @@ CREATE TABLE IF NOT EXISTS certificate_application_history (
   with_compensation     BOOLEAN           NOT NULL,
   annual_compensation   DECIMAL(11,2),
   purpose               VARCHAR(100)      NOT NULL,
+  additional_info       JSON,
+  line_manager_email    VARCHAR(100),
   addressee             VARCHAR(255)      NOT NULL,
   place_of_addressee    VARCHAR(255),
-  additional_info       JSON,
   requested_by          VARCHAR(100)      NOT NULL,
   requested_dt          TIMESTAMP         NOT NULL,
   modified_by           VARCHAR(100),

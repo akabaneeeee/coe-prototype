@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.dto.application.LineManagerDetails;
 import org.aclogistics.coe.domain.event.ApplicationHrApprovedEvent;
 import org.aclogistics.coe.domain.event.ApplicationLineManagerApprovalEvent;
 import org.aclogistics.coe.domain.event.ApplicationRejectedEvent;

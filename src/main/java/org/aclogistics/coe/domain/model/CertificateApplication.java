@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +17,6 @@ import org.aclogistics.coe.domain.enumeration.Department;
 import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
 import org.aclogistics.coe.domain.enumeration.Purpose;
 import org.aclogistics.coe.domain.exception.RecordNotFoundException;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Rosendo Coquilla
@@ -51,6 +48,7 @@ public class CertificateApplication implements Model {
     private BigDecimal annualCompensation;
     private Purpose purpose;
     private Map<String, String> additionalInfo;
+    private String lineManagerEmail;
     private String addressee;
     private String placeOfAddressee;
     private String requestedBy;
@@ -72,14 +70,6 @@ public class CertificateApplication implements Model {
      */
     public void initializeMilestone(String requestedBy, LocalDateTime requestedDt) {
         this.milestones.add(new CertificateApplicationMilestone(requestedBy, requestedDt));
-    }
-
-    public String getLineManagerEmailIfExists() {
-        if (MapUtils.isEmpty(additionalInfo)) {
-            return null;
-        }
-
-        return StringUtils.defaultIfBlank(Objects.toString(additionalInfo.get("line_manager_email")), null);
     }
 
     /**
@@ -116,6 +106,11 @@ public class CertificateApplication implements Model {
         return "%s %s %s".formatted(this.firstName, this.lastName, cleanedMiddleInitial);
     }
 
+    /**
+     * Used to get the next certificate version; when the application is first created, the version will be 1
+     *
+     * @return Short - the next certificate version
+     */
     public Short getNextCertificateVersion() {
         Short latestVersion = this.generatedCertificates.stream()
             .max(Comparator.comparing(GeneratedCertificate::getVersion))
@@ -125,6 +120,11 @@ public class CertificateApplication implements Model {
         return (short) (latestVersion + 1);
     }
 
+    /**
+     * Used to add a new generated certificate
+     *
+     * @param generatedCertificate - the generated certificate
+     */
     public void addGeneratedCertificate(GeneratedCertificate generatedCertificate) {
         this.generatedCertificates.add(generatedCertificate);
     }

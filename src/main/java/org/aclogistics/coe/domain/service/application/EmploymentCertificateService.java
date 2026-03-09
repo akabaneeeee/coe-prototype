@@ -2,28 +2,22 @@ package org.aclogistics.coe.domain.service.application;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.AdditionalInfo;
+import org.aclogistics.coe.domain.dto.application.additionalinfo.HasLineManagerEmail;
 import org.aclogistics.coe.domain.dto.transition.StateTransition;
 import org.aclogistics.coe.domain.dto.transition.StateVariable;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.enumeration.Status;
 import org.aclogistics.coe.domain.exception.RecordNotFoundException;
 import org.aclogistics.coe.domain.model.CertificateApplication;
 import org.aclogistics.coe.domain.model.CertificateApplicationMilestone;
 import org.aclogistics.coe.domain.port.ICertificateApplicationRepository;
-import org.aclogistics.coe.domain.port.IHtmlTemplateRenderer;
-import org.aclogistics.coe.domain.port.IPdfRendererService;
-import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.aclogistics.coe.domain.port.IWorkflowService;
 import org.aclogistics.coe.domain.service.idgenerator.IdGenerator;
 import org.aclogistics.coe.domain.service.publisher.IDomainEventPublisher;
@@ -72,12 +66,19 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
             .employmentStatus(dto.getEmploymentStatus())
             .withCompensation(dto.getWithCompensation())
             .purpose(dto.getPurpose())
-            .additionalInfo(mapper.convertValue(dto.getAdditionalInfo(), TYPE_REFERENCE))
             .addressee(dto.getAddressee().trim())
             .placeOfAddressee(StringUtils.defaultIfBlank(dto.getPlaceOfAddressee(), null))
             .requestedBy(dto.getRequestedBy())
             .requestedDt(now)
             .build();
+
+        AdditionalInfo additionalInfo = dto.getAdditionalInfo();
+        if (additionalInfo instanceof HasLineManagerEmail details) {
+            newApplication.setLineManagerEmail(details.getLineManagerEmail());
+            details.setLineManagerEmail(null);
+        }
+
+        newApplication.setAdditionalInfo(mapper.convertValue(additionalInfo, TYPE_REFERENCE));
         newApplication.initializeMilestone(dto.getRequestedBy(), now);
 
         certificateApplicationRepository.save(newApplication);
@@ -119,22 +120,6 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
         domainEventPublisher.publish(updatedApplication);
     }
 
-//    @Override
-//    public void generateCertificate() {
-//        String htmlContent = htmlTemplateRenderer.render();
-//        byte[] originalPdfBytes = pdfGeneratorService.generate(htmlContent);
-//
-//        try {
-//            Path outputPath = Path.of("src/main/resources/generated-coe.pdf");
-//            Files.createDirectories(outputPath.getParent());
-//
-//            byte[] watermarkedPdfBytes = watermarkService.addWatermark(originalPdfBytes, BusinessUnit.AMC);
-//            Files.write(outputPath, watermarkedPdfBytes);
-//        } catch (IOException ex) {
-//            log.error("Error: ", ex);
-//        }
-//    }
-
     private StateVariable buildStateVariable(
         TransitionApplicationDto dto, Map<Object, Object> currentDetails
     ) {
@@ -142,13 +127,12 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
         stateVariable.setReferenceNumber(dto.getReferenceNumber());
         stateVariable.setCurrentDetails(MapUtils.emptyIfNull(currentDetails));
 
-        var newDetails = new HashMap<>();
-        switch (dto.getEvent()) {
-            case LINE_MANAGER_APPROVE -> newDetails.put("requester_email", dto.getRequesterEmail());
-            case REJECT -> newDetails.put("reason", dto.getReason());
-            case LINE_MANAGER_REJECT -> newDetails.putAll(Map.of("reason", dto.getReason(), "requester_email", dto.getRequesterEmail()));
-            default -> newDetails = new HashMap<>();
-        }
+        Map<Object, Object> newDetails = switch (dto.getEvent()) {
+            case LINE_MANAGER_APPROVE -> Map.of("requester_email", dto.getRequesterEmail());
+            case REJECT -> Map.of("reason", dto.getReason());
+            case LINE_MANAGER_REJECT -> Map.of("reason", dto.getReason(), "requester_email", dto.getRequesterEmail());
+            default -> Map.of();
+        };
 
         stateVariable.setNewDetails(newDetails);
 

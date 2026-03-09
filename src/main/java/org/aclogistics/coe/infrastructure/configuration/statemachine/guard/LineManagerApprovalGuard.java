@@ -36,7 +36,7 @@ public class LineManagerApprovalGuard implements Guard<Status, Event> {
         );
 
         CertificateApplication application = repository.findByReferenceNumber(referenceNumber);
-        String lineManager = application.getLineManagerEmailIfExists();
+        String lineManager = application.getLineManagerEmail();
 
         if (StringUtils.isBlank(lineManager)) {
             log.info("This application has no line manager email, denying transition...");

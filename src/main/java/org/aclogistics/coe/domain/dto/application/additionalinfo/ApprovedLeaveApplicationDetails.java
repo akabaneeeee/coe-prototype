@@ -1,5 +1,7 @@
 package org.aclogistics.coe.domain.dto.application.additionalinfo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -12,9 +14,10 @@ import lombok.Data;
  * @author Rosendo Coquilla
  */
 @Data
+@JsonInclude(Include.NON_NULL)
 @JsonNaming(SnakeCaseStrategy.class)
 @JsonTypeName("APPROVED_LEAVE_APPLICATION")
-public class ApprovedLeaveApplicationDetails implements AdditionalInfo {
+public class ApprovedLeaveApplicationDetails implements AdditionalInfo, HasLineManagerEmail {
 
     @Serial
     private static final long serialVersionUID = 1250157949607728884L;
