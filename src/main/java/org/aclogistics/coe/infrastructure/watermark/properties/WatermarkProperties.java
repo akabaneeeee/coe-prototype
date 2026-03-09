@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.model.enumeration.BusinessUnit;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

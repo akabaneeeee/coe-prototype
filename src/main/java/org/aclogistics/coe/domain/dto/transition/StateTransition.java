@@ -4,8 +4,8 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aclogistics.coe.domain.enumeration.Event;
-import org.aclogistics.coe.domain.enumeration.Status;
+import org.aclogistics.coe.domain.model.enumeration.Event;
+import org.aclogistics.coe.domain.model.enumeration.Status;
 
 /**
  * @author Rosendo Coquilla

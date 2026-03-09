@@ -21,10 +21,10 @@ import org.aclogistics.coe.domain.dto.application.additionalinfo.ApprovedLeaveAp
 import org.aclogistics.coe.domain.dto.application.additionalinfo.SchoolRequirementsDetails;
 import org.aclogistics.coe.domain.dto.application.additionalinfo.TravelPurposesDetails;
 import org.aclogistics.coe.domain.dto.application.additionalinfo.VisaApplicationDetails;
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
-import org.aclogistics.coe.domain.enumeration.Department;
-import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
-import org.aclogistics.coe.domain.enumeration.Purpose;
+import org.aclogistics.coe.domain.model.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.model.enumeration.Department;
+import org.aclogistics.coe.domain.model.enumeration.EmploymentStatus;
+import org.aclogistics.coe.domain.model.enumeration.Purpose;
 
 /**
  * @author Rosendo Coquilla

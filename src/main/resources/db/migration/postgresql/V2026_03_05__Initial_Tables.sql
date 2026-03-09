@@ -118,3 +118,39 @@ CREATE TABLE IF NOT EXISTS certificate_application_history (
 CREATE INDEX IF NOT EXISTS cah_reference_number_idx ON certificate_application_history (reference_number);
 CREATE INDEX IF NOT EXISTS cah_requested_dt_idx ON certificate_application_history (requested_dt);
 CREATE INDEX IF NOT EXISTS cah_modified_dt_idx ON certificate_application_history (modified_dt);
+
+-- Certificate Application Latest Milestone View
+CREATE OR REPLACE VIEW v_certificate_application_latest_milestone AS
+SELECT DISTINCT ON (cam.certificate_application_id)
+  cam.certificate_application_id,
+  cam.status,
+  cam.status_details,
+  cam.transitioned_by,
+  cam.transitioned_dt
+FROM certificate_application_milestone cam
+ORDER BY cam.certificate_application_id, cam.transitioned_dt DESC;
+
+-- Latest Certificate Application Details View
+CREATE OR REPLACE VIEW v_certificate_application_latest_details AS
+SELECT
+  ca.id,
+  ca.requester_email,
+  ca.reference_number,
+  ca.first_name,
+  ca.last_name,
+  ca.middle_initial,
+  ca.business_unit,
+  ca.department,
+  ca.purpose,
+  ca.additional_info,
+  ca.additional_info ->> 'line_manager_first_name' as line_manager_first_name,
+  ca.additional_info ->> 'line_manager_last_name' as line_manager_last_name,
+  ca.line_manager_email,
+  ca.requested_by,
+  ca.requested_dt,
+  vcalm.status AS latest_status,
+  vcalm.status_details,
+  vcalm.transitioned_by AS latest_transitioned_by,
+  vcalm.transitioned_dt AS latest_transitioned_dt
+FROM certificate_application ca
+LEFT JOIN v_certificate_application_latest_milestone vcalm ON vcalm.certificate_application_id = ca.id;

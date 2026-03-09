@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aclogistics.coe.domain.enumeration.Status;
+import org.aclogistics.coe.domain.model.enumeration.Status;
 import org.apache.commons.collections4.MapUtils;
 
 /**

@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.model.enumeration.BusinessUnit;
 import org.aclogistics.coe.domain.port.IWatermarkService;
 import org.aclogistics.coe.infrastructure.watermark.properties.WatermarkProperties;
 import org.apache.pdfbox.pdmodel.PDDocument;

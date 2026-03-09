@@ -1,7 +1,7 @@
 package org.aclogistics.coe.domain.port;
 
 import org.aclogistics.coe.domain.dto.transition.StateTransition;
-import org.aclogistics.coe.domain.enumeration.Status;
+import org.aclogistics.coe.domain.model.enumeration.Status;
 
 /**
  * @author Rosendo Coquilla

@@ -6,7 +6,7 @@ import java.io.Serial;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aclogistics.coe.domain.dto.Dto;
-import org.aclogistics.coe.domain.enumeration.Event;
+import org.aclogistics.coe.domain.model.enumeration.Event;
 import org.apache.commons.lang3.StringUtils;
 
 /**

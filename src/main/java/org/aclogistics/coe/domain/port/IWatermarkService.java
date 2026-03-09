@@ -1,6 +1,6 @@
 package org.aclogistics.coe.domain.port;
 
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.model.enumeration.BusinessUnit;
 
 /**
  * @author Rosendo Coquilla

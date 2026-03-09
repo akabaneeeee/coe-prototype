@@ -3,7 +3,7 @@ package org.aclogistics.coe.infrastructure.aws;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aclogistics.coe.domain.email.EmailRequestDto;
+import org.aclogistics.coe.domain.dto.email.EmailRequestDto;
 import org.aclogistics.coe.domain.port.IEmailNotificationSender;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.ses.SesClient;

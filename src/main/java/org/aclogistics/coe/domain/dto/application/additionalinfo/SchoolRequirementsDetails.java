@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import lombok.Data;
-import org.aclogistics.coe.domain.enumeration.Beneficiary;
+import org.aclogistics.coe.domain.model.enumeration.Beneficiary;
 
 /**
  * @author Rosendo Coquilla

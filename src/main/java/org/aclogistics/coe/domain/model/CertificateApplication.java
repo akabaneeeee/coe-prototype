@@ -12,10 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aclogistics.coe.domain.enumeration.BusinessUnit;
-import org.aclogistics.coe.domain.enumeration.Department;
-import org.aclogistics.coe.domain.enumeration.EmploymentStatus;
-import org.aclogistics.coe.domain.enumeration.Purpose;
+import org.aclogistics.coe.domain.model.enumeration.BusinessUnit;
+import org.aclogistics.coe.domain.model.enumeration.Department;
+import org.aclogistics.coe.domain.model.enumeration.EmploymentStatus;
+import org.aclogistics.coe.domain.model.enumeration.Purpose;
 import org.aclogistics.coe.domain.exception.RecordNotFoundException;
 
 /**
@@ -103,7 +103,7 @@ public class CertificateApplication implements Model {
             cleanedMiddleInitial = this.middleInitial + ".";
         }
 
-        return "%s %s %s".formatted(this.firstName, this.lastName, cleanedMiddleInitial);
+        return "%s %s %s".formatted(this.firstName, cleanedMiddleInitial, this.lastName);
     }
 
     /**
