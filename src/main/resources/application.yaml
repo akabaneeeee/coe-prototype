@@ -103,6 +103,9 @@ app:
   generated-coe:
     temporary-directory: /tmp/coe
 
+  s3:
+    presigned-url-expiry: 120
+
 eureka:
   instance:
     hostname: localhost

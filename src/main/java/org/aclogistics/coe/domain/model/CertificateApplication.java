@@ -128,4 +128,10 @@ public class CertificateApplication implements Model {
     public void addGeneratedCertificate(GeneratedCertificate generatedCertificate) {
         this.generatedCertificates.add(generatedCertificate);
     }
+
+    public GeneratedCertificate getLatestGeneratedCertificate() {
+        return this.generatedCertificates.stream()
+            .max(Comparator.comparing(GeneratedCertificate::getGeneratedDt))
+            .orElse(null);
+    }
 }

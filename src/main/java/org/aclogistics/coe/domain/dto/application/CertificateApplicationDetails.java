@@ -44,10 +44,11 @@ public class CertificateApplicationDetails implements Dto {
     private String requestedDt;
     private String modifiedBy;
     private String modifiedDt;
+    private GeneratedCertificateDetails latestCertificate;
 
     @Builder.Default
     private List<CertificateApplicationMilestoneDetails> milestones = new ArrayList<>();
 
     @Builder.Default
-    private List<GeneratedCertificateDetails> certificates = new ArrayList<>();
+    private List<GeneratedCertificateDetails> pastCertificates = new ArrayList<>();
 }

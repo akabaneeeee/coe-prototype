@@ -219,18 +219,30 @@ public class EmploymentCertificateService implements IEmploymentCertificateServi
         );
 
         if (CollectionUtils.isNotEmpty(foundApplication.getGeneratedCertificates())) {
-            details.getCertificates().addAll(
-                foundApplication.getGeneratedCertificates()
-                    .stream()
-                    .sorted(Comparator.comparing(GeneratedCertificate::getVersion).reversed())
-                    .map(certificate -> GeneratedCertificateDetails.builder()
-                        .fileName(certificate.getFileName())
-                        .presignedUrl(fileRepository.generatePresignedURL(certificate.getS3Key(), certificate.getS3Bucket()))
-                        .generatedBy(certificate.getGeneratedBy())
-                        .generatedDt(DateTimeHelper.convertToFullDateTimeFormat(certificate.getGeneratedDt()))
-                        .build())
-                    .toList()
+            GeneratedCertificate latestCertificate = foundApplication.getLatestGeneratedCertificate();
+            details.setLatestCertificate(GeneratedCertificateDetails.builder()
+                .fileName(latestCertificate.getFileName())
+                .presignedUrl(fileRepository.generatePresignedURL(latestCertificate.getS3Key(), latestCertificate.getS3Bucket()))
+                .generatedBy(latestCertificate.getGeneratedBy())
+                .generatedDt(DateTimeHelper.convertToFullDateTimeFormat(latestCertificate.getGeneratedDt()))
+                .build()
             );
+
+            if (foundApplication.getGeneratedCertificates().size() > 1) {
+                details.getPastCertificates().addAll(
+                    foundApplication.getGeneratedCertificates()
+                        .stream()
+                        .sorted(Comparator.comparing(GeneratedCertificate::getVersion).reversed())
+                        .skip(1)
+                        .map(certificate -> GeneratedCertificateDetails.builder()
+                            .fileName(certificate.getFileName())
+                            .presignedUrl(fileRepository.generatePresignedURL(certificate.getS3Key(), certificate.getS3Bucket()))
+                            .generatedBy(certificate.getGeneratedBy())
+                            .generatedDt(DateTimeHelper.convertToFullDateTimeFormat(certificate.getGeneratedDt()))
+                            .build())
+                        .toList()
+                );
+            }
         }
 
         return details;
