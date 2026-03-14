@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/ecgen/applications")
+@RequestMapping("/v1/ecgn/applications")
 public class CertificateApplicationController {
 
     private final IEmploymentCertificateService employmentCertificateService;

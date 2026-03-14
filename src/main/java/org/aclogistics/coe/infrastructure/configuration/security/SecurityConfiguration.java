@@ -26,7 +26,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(auth ->
                 auth
                     .requestMatchers("/actuator/**").permitAll()
-                    .requestMatchers("/coe/api-docs/**", "/coe/swagger-ui/**", "/coe/swagger-ui.html").permitAll()
+                    .requestMatchers("/ecgn/api-docs/**", "/ecgn/swagger-ui/**", "/ecgn/swagger-ui.html").permitAll()
                     .anyRequest().permitAll()
             ).oauth2ResourceServer(oauth2ResourceServer ->
                 oauth2ResourceServer.jwt(jwt -> jwt.jwtAuthenticationConverter(this.jwtAuthenticationConverter()))
