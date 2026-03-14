@@ -1,15 +1,23 @@
 package org.aclogistics.coe.application.web;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aclogistics.coe.domain.dto.application.ApplyCertificateDto;
 import org.aclogistics.coe.domain.dto.application.CertificateApplicationDetails;
 import org.aclogistics.coe.domain.dto.application.UpdateApplicationDetails;
+import org.aclogistics.coe.domain.dto.application.filtered.CertificateApplicationDto;
 import org.aclogistics.coe.domain.dto.application.filtered.GetFilteredApplicationDto;
 import org.aclogistics.coe.domain.dto.application.filtered.PaginatedApplicationDto;
 import org.aclogistics.coe.domain.dto.transition.TransitionApplicationDto;
 import org.aclogistics.coe.domain.service.application.IEmploymentCertificateService;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,7 +65,24 @@ public class CertificateApplicationController {
     public ResponseEntity<PaginatedApplicationDto> filteredApplication(
         @RequestBody @Valid final GetFilteredApplicationDto  request
     ) {
-        return ResponseEntity.ok().body(employmentCertificateService.getPaginatedApplications(request));
+        PaginatedApplicationDto result = employmentCertificateService.getPaginatedApplications(request);
+
+        List<CertificateApplicationDto> applications = result.getApplications();
+
+        if (CollectionUtils.isEmpty(applications)) {
+            return ResponseEntity.ok().body(result);
+        }
+
+        for  (CertificateApplicationDto application : applications) {
+            Link selfLink = linkTo(
+                methodOn(CertificateApplicationController.class)
+                    .getApplicationDetails(application.getReferenceNumber())
+            ).withSelfRel();
+
+            application.add(selfLink);
+        }
+
+        return ResponseEntity.ok().body(result);
     }
 
     @GetMapping("/{reference-number}")
@@ -69,7 +94,7 @@ public class CertificateApplicationController {
     }
 
     @PatchMapping("/{reference-number}")
-    public ResponseEntity<CertificateApplicationDetails> updateApplicationDetails(
+    public ResponseEntity<Void> updateApplicationDetails(
         @PathVariable("reference-number") final String referenceNumber,
         @RequestBody @Valid final UpdateApplicationDetails request
     ) {

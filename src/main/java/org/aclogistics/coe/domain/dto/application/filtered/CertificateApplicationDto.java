@@ -6,7 +6,9 @@ import java.io.Serial;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.aclogistics.coe.domain.dto.Dto;
+import org.springframework.hateoas.RepresentationModel;
 
 /**
  * @author Rosendo Coquilla
@@ -15,7 +17,8 @@ import org.aclogistics.coe.domain.dto.Dto;
 @Builder
 @AllArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-public class CertificateApplicationDto implements Dto {
+@EqualsAndHashCode(callSuper = false)
+public class CertificateApplicationDto extends RepresentationModel<CertificateApplicationDto> implements Dto {
 
     @Serial
     private static final long serialVersionUID = 1973079741173182154L;
